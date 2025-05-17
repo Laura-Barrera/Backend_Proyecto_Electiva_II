@@ -1,0 +1,8 @@
+transformers[tf]
+huggingface_hub
+google-cloud-dialogflow
+fastapi
+python-multipart
+uvicorn
+pyngrok
+nest_asyncio
