@@ -16,8 +16,6 @@ import pandas as pd
 import numpy as np
 import uvicorn
 import threading
-from pyngrok import ngrok
-import joblib
 import nest_asyncio
 
 from fastapi import FastAPI, File, UploadFile, Form
