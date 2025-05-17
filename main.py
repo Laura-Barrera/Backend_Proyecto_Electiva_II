@@ -8,12 +8,10 @@ Original file is located at
 """
 
 import tensorflow as tf
-from google.colab import drive
 
 import os
 from google.cloud import dialogflow_v2 as dialogflow
 import json
-from google.colab import drive
 import pandas as pd
 import numpy as np
 import uvicorn
@@ -40,25 +38,6 @@ from huggingface_hub import hf_hub_download
 from tensorflow.keras.layers import Layer
 import tensorflow.keras.backend as K
 
-# Acceso a drive
-drive.mount('/content/drive')
-
-# Carpetas de Melissa
-path_imagenes = "/content/drive/MyDrive/Segundo Semestre Especializacion/Electiva II/Proyecto Integrador/Imagenes prueba/"
-path_modelos = "/content/drive/MyDrive/Segundo Semestre Especializacion/Electiva II/Proyecto Integrador/Modelos/"
-path_credenciales =  "/content/drive/MyDrive/Segundo Semestre Especializacion/Electiva II/Proyecto Integrador/Credenciales/"
-
-# Carpetas de Diana
-#path_imagenes = "/content/drive/MyDrive/Colab Notebooks/MODULO7/proyecto/Proyecto Integrador/Imagenes prueba/"
-#path_modelos = "/content/drive/MyDrive/Colab Notebooks/MODULO7/proyecto/Proyecto Integrador/Modelos/"
-#path_credenciales =  "/content/drive/MyDrive/Segundo Semestre Especializacion/Electiva II/Proyecto Integrador/Credenciales/"
-
-# Carpetas de Luis
-#path_imagenes = "/content/drive/MyDrive/Colab Notebooks/Proyecto/Imagenes prueba/"
-#path_credenciales =  "/content/drive/MyDrive/Colab Notebooks/Proyecto/Credenciales/"
-
-# modelo CNN
-# modelo_cnn = tf.keras.models.load_model(path_modelos + "plant_disease_efficientnetb4.h5")
 
 """Urilizar modelo desde Huggong Face
 
@@ -73,7 +52,7 @@ modelo_cnn = tf.keras.models.load_model(model_path)
 
 modelo_cnn.summary()
 
-image_path = path_imagenes+"AppleCedarRust1.JPG"
+image_path = "AppleCedarRust1.JPG"
 
 img = image.load_img(image_path, target_size=(380, 380))  # El tamaño debe coincidir con el tamaño de entrada del modelo
 
@@ -150,7 +129,7 @@ def AnalizarEnfermedadHoja(path_imagen):
 
         predictions = modelo_cnn.predict(img_array)
         predicted_index = np.argmax(predictions)
-        return diccionario.get(predicted_index, "Desconocido")
+        return diccionario_es.get(predicted_index, "Desconocido")
     except Exception as e:
         return f"Error al procesar la imagen: {str(e)}"
 
@@ -182,15 +161,15 @@ def AnalizarEnfermedadHoja(path_imagen):
     except Exception as e:
         return f"Error al procesar la imagen: {str(e)}"
 
-AnalizarEnfermedadHoja(path_imagenes + "AppleCedarRust3.JPG")
+AnalizarEnfermedadHoja("AppleCedarRust3.JPG")
 
 AnalizarEnfermedadHoja("https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg?w=400&h=300&c=crop")
 
 """### credenciales"""
 
 # Cargar las credenciales desde el JSON a las variables de entorno
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = path_credenciales + "asistenteuptcadne-458017-c07d554b0041.json"
-with open(path_credenciales + "asistenteuptcadne-458017-c07d554b0041.json","r") as f:
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "asistenteuptcadne-458017-c07d554b0041.json"
+with open("asistenteuptcadne-458017-c07d554b0041.json","r") as f:
   datos = json.load(f)
 
 print("ProjectID: ", datos['project_id'])
