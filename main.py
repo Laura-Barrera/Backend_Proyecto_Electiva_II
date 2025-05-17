@@ -312,5 +312,8 @@ async def conversar(
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))  # Render define el puerto con la variable PORT
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    import os
+    import uvicorn
+
+    port = int(os.environ.get("PORT", 10000))  # Render define PORT dinámicamente
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
