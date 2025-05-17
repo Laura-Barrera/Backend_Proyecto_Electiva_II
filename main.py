@@ -247,51 +247,6 @@ print("\nParámetros: ", data['parametros'])
 
 """¿esta planta esta enferma? https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg?w=400&h=300&c=crop"""
 
-import re
-
-def extraer_url(texto):
-    urls = re.findall(r'(https?://\S+)', texto)
-    return urls[0] if urls else None
-
-while True:
-    mensaje = input("Usuario: ").strip()
-
-    if not mensaje:
-        print("ADNEUPTC dice: Por favor, escribe algo.")
-        continue
-
-    if mensaje.lower() in ["terminar", "exit", "quit", "adios", "chao"]:
-        data = detec_intent_texts_full(project_id, session_id, "Nos vemos pronto", language_code)
-        print("ADNEUPTC dice:", data['respuesta'])
-        break
-
-    data = detec_intent_texts_full(project_id, session_id, mensaje, language_code)
-
-    if not isinstance(data, dict) or 'respuesta' not in data:
-        print("ADNEUPTC dice: Error al procesar la respuesta.")
-        continue
-
-    print("ADNEUPTC dice:", data['respuesta'])
-
-    intencion = data.get('intencion')
-    parametros = data.get('parametros', {})
-
-    if intencion == "Analizar Planta":
-      uri = extraer_url(mensaje)
-      path = parametros.get('path')
-      if uri:
-          resultado = AnalizarEnfermedadHoja(uri)
-      elif path:
-          resultado = AnalizarEnfermedadHoja(path)
-      else:
-          print("ADNEUPTC dice: No se encontró la imagen de la hoja para analizar.")
-          resultado = None  # Para evitar error si no hay imagen
-
-      if resultado:
-        if "sano" in resultado.lower():
-            print(f"ADNEUPTC dice: Tu planta no presenta ninguna enfermedad, es {resultado}")
-        else:
-            print(f"ADNEUPTC dice: La enfermedad predicha en la hoja es: {resultado}")
 
 """# **FastAPI**"""
 
