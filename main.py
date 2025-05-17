@@ -311,3 +311,8 @@ async def conversar(
             resultado["prediccion"] = AnalizarEnfermedadHoja(url_detectada)
 
     return JSONResponse(content=resultado)
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))  # Render define el puerto con la variable PORT
+    uvicorn.run(app, host="0.0.0.0", port=port)
