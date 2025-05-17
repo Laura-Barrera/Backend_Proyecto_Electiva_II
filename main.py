@@ -232,7 +232,6 @@ from typing import Optional
 import uuid
 import os
 import shutil
-from pyngrok import ngrok
 import uvicorn
 import nest_asyncio
 import re
@@ -312,8 +311,6 @@ async def conversar(
 
 
 if __name__ == "__main__":
-    import os
     import uvicorn
-
-    port = 8080  # Render define PORT dinámicamente
-    uvicorn.run("main:app", host="0.0.0.0", port=port)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
